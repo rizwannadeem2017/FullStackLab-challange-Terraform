@@ -3,27 +3,27 @@ name: source-branch-check
 on: [pull_request]
 
 jobs:
-    check-source-branch:
-        runs-on: ubuntu-lasest
-        steps:
+  check-source-branch:
+    runs-on: ubuntu-lasest
+    steps:
 
-            - name: check source branch from production / master 
-              if: contains(fromJson('["master", "main"]'), github.base_ref) && github.head_ref != 'staging'
-              uses: actions/github-script@v6
-              with: 
-                script: | 
-                  core.setFailed(' changes should be merged only from staging branch')
+      - name: check source branch from production / master 
+        if: contains(fromJson('["master", "main"]'), github.base_ref) && github.head_ref != 'staging'
+        uses: actions/github-script@v6
+        with: 
+          script: | 
+            core.setFailed(' changes should be merged only from staging branch')
 
-            - name: check source branch from staging
-              if: github.base_ref == 'staging' && github.head_ref != 'develop'
-              uses: actions/github-script@v6
-              with: 
-                script: | 
-                  core.setFailed(' changes should be merged only from develop branch')
+      - name: check source branch from staging
+        if: github.base_ref == 'staging' && github.head_ref != 'develop'
+        uses: actions/github-script@v6
+        with: 
+          script: | 
+             core.setFailed(' changes should be merged only from develop branch')
 
-            - name: check source branch from feature / bugfix
-              if: github.base_ref == 'develop' && !(startsWith(github.base_ref, 'feature/')) || (startsWith(github.base_ref, 'bugfix/'))
-              uses: actions/github-script@v6
-              with: 
-                script: | 
-                  core.setFailed(' changes should be merged only from branch name starts with feature or bugfix')
+      - name: check source branch from feature / bugfix
+        if: github.base_ref == 'develop' && !(startsWith(github.base_ref, 'feature/')) || (startsWith(github.base_ref, 'bugfix/'))
+         uses: actions/github-script@v6
+         with: 
+           script: | 
+             core.setFailed(' changes should be merged only from branch name starts with feature or bugfix')
