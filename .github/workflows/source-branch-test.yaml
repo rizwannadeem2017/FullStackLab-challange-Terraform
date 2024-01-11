@@ -21,9 +21,9 @@ jobs:
                 script: | 
                   core.setFailed(' changes should be merged only from develop branch')
 
-            - name: check source branch from feature / buggfix
-              if: github.base_ref == 'develop' && !(startsWith(github.base_ref, 'feature/')) || (startsWith(github.base_ref, 'buggfix/'))
+            - name: check source branch from feature / bugfix
+              if: github.base_ref == 'develop' && !(startsWith(github.base_ref, 'feature/')) || (startsWith(github.base_ref, 'bugfix/'))
               uses: actions/github-script@v6
               with: 
                 script: | 
-                  core.setFailed(' changes should be merged only from branch name starts with feature or buggfix')
+                  core.setFailed(' changes should be merged only from branch name starts with feature or bugfix')
